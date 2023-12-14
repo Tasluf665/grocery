@@ -1,7 +1,7 @@
 import React from "react";
 import { useFonts } from "expo-font";
 
-import AppContainer from "./AppContainer";
+import WelcomeScreen from "./(Authentication)/WelcomeScreen";
 
 const index = () => {
   const [fontsLoaded] = useFonts({
@@ -23,7 +23,7 @@ const index = () => {
     return null;
   }
 
-  return <AppContainer />;
+  return <WelcomeScreen />;
 };
 
 export default index;

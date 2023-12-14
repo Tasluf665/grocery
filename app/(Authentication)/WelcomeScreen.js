@@ -11,41 +11,52 @@ import { auth } from "../../firebase";
 
 import Colors from "../../constant/Colors";
 import CustomeFonts from "../../constant/CustomeFonts";
+import CustomeActivityIndicator from "../../components/CustomeActivityIndicator";
 
 export default function WelcomeScreen() {
   const navigation = useNavigation();
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user && user.emailVerified) {
         navigation.replace("Main");
       }
+      setLoading(false);
       return () => unsubscribe();
     });
   }, []);
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../../assets/StartupImages/Start.png")}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <Text style={styles.titelText}>Welcome</Text>
-        <Text style={styles.titelText}>to our store</Text>
-        <Text style={styles.text}>
-          Ger your groceries in as fast as one hour
-        </Text>
-        <View style={styles.buttonContainer}>
-          <TouchableNativeFeedback onPress={() => router.push("/LoginScreen")}>
-            <View style={styles.button}>
-              <Text style={[styles.titelText, { fontSize: 20 }]}>
-                Get Started
-              </Text>
+    <View style={{ flex: 1 }}>
+      {loading ? (
+        <CustomeActivityIndicator />
+      ) : (
+        <View style={styles.container}>
+          <ImageBackground
+            source={require("../../assets/StartupImages/Start.png")}
+            resizeMode="cover"
+            style={styles.image}
+          >
+            <Text style={styles.titelText}>Welcome</Text>
+            <Text style={styles.titelText}>to our store</Text>
+            <Text style={styles.text}>
+              Ger your groceries in as fast as one hour
+            </Text>
+            <View style={styles.buttonContainer}>
+              <TouchableNativeFeedback
+                onPress={() => router.push("/LoginScreen")}
+              >
+                <View style={styles.button}>
+                  <Text style={[styles.titelText, { fontSize: 20 }]}>
+                    Get Started
+                  </Text>
+                </View>
+              </TouchableNativeFeedback>
             </View>
-          </TouchableNativeFeedback>
+          </ImageBackground>
         </View>
-      </ImageBackground>
+      )}
     </View>
   );
 }

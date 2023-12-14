@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableNativeFeedback,
   Image,
   Alert,
@@ -21,73 +20,75 @@ import { auth } from "../../firebase";
 import Colors from "../../constant/Colors";
 import CustomeFonts from "../../constant/CustomeFonts";
 import PasswordTextInput from "../../components/PasswordTextInput";
+import CustomeActivityIndicator from "../../components/CustomeActivityIndicator";
+import CustomeTextInput from "../../components/CustomeTextInput";
+import CustomeImageContainer from "../../components/CustomeImageContainer";
 
 export default function SignupScreen() {
   const [password, setPassword] = React.useState();
   const [email, setEmail] = React.useState();
   const [displayName, setDisplayName] = React.useState();
+  const [loading, setLoading] = React.useState(false);
 
   const handleSignup = async () => {
     try {
+      setLoading(true);
       await createUserWithEmailAndPassword(auth, email, password);
-
       await updateProfile(auth.currentUser, {
         displayName: displayName,
       });
-
       await sendEmailVerification(auth.currentUser);
-
+      await signOut(auth);
+      setLoading(false);
       Alert.alert(
         "An email is send for verification. Verify your email and log in into your account"
       );
-      await signOut(auth);
     } catch (error) {
       Alert.alert(error.message);
     }
   };
 
   return (
-    <KeyboardAvoidingView
-      style={{ flex: 1, marginTop: StatusBar.currentHeight }}
-      behavior={"padding"}
-    >
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
-            source={require("../../assets/StartupImages/carrot.png")}
-            style={styles.image}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={styles.itemContainer}>
-          <Text style={styles.title}>Sign Up</Text>
-          <Text style={[styles.text, { marginBottom: 40 }]}>
-            Enter your name, emails and password
-          </Text>
-          <Text style={[styles.text, { fontWeight: "bold" }]}>Name</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setDisplayName}
-            keyboardType="default"
-          />
-          <Text style={[styles.text, { fontWeight: "bold" }]}>Email</Text>
-          <TextInput
-            style={styles.textInput}
-            onChangeText={setEmail}
-            keyboardType="email-address"
-          />
-          <PasswordTextInput title="Password" setPassword={setPassword} />
+    <View style={{ flex: 1 }}>
+      {loading ? (
+        <CustomeActivityIndicator />
+      ) : (
+        <KeyboardAvoidingView
+          style={{
+            flex: 1,
+            marginTop: StatusBar.currentHeight,
+            backgroundColor: Colors.LightWhite,
+          }}
+          behavior={"padding"}
+          keyboardVerticalOffset={120}
+        >
+          <View style={styles.container}>
+            <CustomeImageContainer />
+            <View style={styles.itemContainer}>
+              <Text style={styles.title}>Sign Up</Text>
+              <Text style={[styles.text, { marginBottom: 40 }]}>
+                Enter your name, emails and password
+              </Text>
+              <CustomeTextInput
+                setState={setDisplayName}
+                name="Name"
+                keyboardType="default"
+              />
+              <CustomeTextInput setState={setEmail} />
+              <PasswordTextInput title="Password" setPassword={setPassword} />
 
-          <View style={styles.buttonContainer}>
-            <TouchableNativeFeedback onPress={handleSignup}>
-              <View style={styles.button}>
-                <Text style={[styles.titelText]}>Sign Up</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableNativeFeedback onPress={handleSignup}>
+                  <View style={styles.button}>
+                    <Text style={[styles.titelText]}>Sign Up</Text>
+                  </View>
+                </TouchableNativeFeedback>
               </View>
-            </TouchableNativeFeedback>
+            </View>
           </View>
-        </View>
-      </View>
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      )}
+    </View>
   );
 }
 
@@ -111,24 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Primary,
     justifyContent: "center",
     alignItems: "center",
-  },
-  textInput: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.BorderGray,
-    marginBottom: 20,
-    fontFamily: CustomeFonts.Gilroy_Light,
-    fontSize: 16,
-    paddingVertical: 5,
-  },
-  imageContainer: {
-    width: "100%",
-    height: "35%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 80,
-    height: 80,
   },
   itemContainer: {
     marginHorizontal: 20,

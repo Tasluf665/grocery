@@ -9,9 +9,7 @@ import {
   View,
   Text,
   StyleSheet,
-  TextInput,
   TouchableNativeFeedback,
-  Image,
   TouchableOpacity,
   Alert,
   KeyboardAvoidingView,
@@ -29,8 +27,9 @@ import { auth } from "../../firebase";
 import Colors from "../../constant/Colors";
 import CustomeFonts from "../../constant/CustomeFonts";
 import PasswordTextInput from "../../components/PasswordTextInput";
-// import Auth from "../../components/Auth";
 import CustomeActivityIndicator from "../../components/CustomeActivityIndicator";
+import CustomeTextInput from "../../components/CustomeTextInput";
+import CustomeImageContainer from "../../components/CustomeImageContainer";
 
 export default function LoginScreen() {
   const [password, setPassword] = React.useState();
@@ -79,28 +78,22 @@ export default function LoginScreen() {
         <CustomeActivityIndicator />
       ) : (
         <KeyboardAvoidingView
-          style={{ flex: 1, marginTop: StatusBar.currentHeight }}
+          style={{
+            flex: 1,
+            marginTop: StatusBar.currentHeight,
+            backgroundColor: Colors.LightWhite,
+          }}
           behavior={"padding"}
         >
           <View style={styles.container}>
-            <View style={styles.imageContainer}>
-              <Image
-                source={require("../../assets/StartupImages/carrot.png")}
-                style={styles.image}
-                resizeMode="contain"
-              />
-            </View>
+            <CustomeImageContainer />
             <View style={styles.itemContainer}>
               <Text style={styles.title}>Loging</Text>
               <Text style={[styles.text, { marginBottom: 40 }]}>
                 Enter your emails and password
               </Text>
-              <Text style={[styles.text, { fontWeight: "bold" }]}>Email</Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-              />
+
+              <CustomeTextInput setState={setEmail} />
               <PasswordTextInput title="Password" setPassword={setPassword} />
 
               <View style={styles.forgotContainer}>
@@ -124,8 +117,6 @@ export default function LoginScreen() {
                   </View>
                 </TouchableNativeFeedback>
               </View>
-
-              {/* <Auth setLoading={setLoading} /> */}
             </View>
           </View>
         </KeyboardAvoidingView>
@@ -138,6 +129,7 @@ const styles = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
+    backgroundColor: Colors.LightWhite,
   },
   buttonContainer: {
     width: "70%",
@@ -154,24 +146,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.Primary,
     justifyContent: "center",
     alignItems: "center",
-  },
-  textInput: {
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.BorderGray,
-    marginBottom: 20,
-    fontFamily: CustomeFonts.Gilroy_Light,
-    fontSize: 16,
-    paddingVertical: 5,
-  },
-  imageContainer: {
-    width: "100%",
-    height: "35%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    width: 80,
-    height: 80,
   },
   itemContainer: {
     marginHorizontal: 20,
