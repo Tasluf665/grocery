@@ -28,7 +28,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-size-matters": "^0.4.2",
     "react-native-web": "~0.19.6",
-    "react-refresh": "^0.14.0"
+    "react-refresh": "^0.14.0",
+    "expo-image-picker": "~14.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
