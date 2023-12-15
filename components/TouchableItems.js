@@ -1,10 +1,11 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-
-import { Entypo } from "@expo/vector-icons";
 import { ScaledSheet } from "react-native-size-matters";
 
-import CustomeFonts from "../../constant/CustomeFonts";
+import { Entypo } from "@expo/vector-icons";
+
+import CustomeFonts from "../constant/CustomeFonts";
+import Colors from "../constant/Colors";
 
 export default function TouchableItems(props) {
   return (
@@ -49,7 +50,7 @@ const styles = ScaledSheet.create({
   line: {
     width: "100%",
     height: 1,
-    backgroundColor: "#E2E2E2",
+    backgroundColor: Colors.BorderGray,
     marginTop: "16@vs",
   },
 });

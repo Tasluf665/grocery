@@ -4,15 +4,15 @@ import { ScaledSheet } from "react-native-size-matters";
 
 import { Feather } from "@expo/vector-icons";
 
-import Colors from "../../constant/Colors";
-import CustomeFonts from "../../constant/CustomeFonts";
+import Colors from "../constant/Colors";
+import CustomeFonts from "../constant/CustomeFonts";
 
 export default function LogoutButton(props) {
   return (
     <View style={styles.touchContainer}>
       <TouchableNativeFeedback
         onPress={props.onPress}
-        background={TouchableNativeFeedback.Ripple("#DBDBDB")}
+        background={TouchableNativeFeedback.Ripple(Colors.LightGray)}
       >
         <View style={styles.container}>
           <Feather name="log-out" size={24} color={Colors.Primary} />
@@ -34,7 +34,7 @@ const styles = ScaledSheet.create({
   container: {
     height: "55@vs",
     width: "100%",
-    backgroundColor: "#F2F3F2",
+    backgroundColor: Colors.Gray,
     borderRadius: 15,
     alignItems: "center",
     flexDirection: "row",

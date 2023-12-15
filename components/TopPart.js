@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
 import * as ImagePicker from "expo-image-picker";
 
-import CustomeFonts from "../../constant/CustomeFonts";
+import CustomeFonts from "../constant/CustomeFonts";
 
 export default function TopPart(props) {
   const [image, setImage] = React.useState(null);
@@ -17,8 +17,6 @@ export default function TopPart(props) {
         quality: 1,
         allowsMultipleSelection: true,
       });
-
-      console.log(result?.assets);
 
       if (result?.assets[0]?.uri) {
         setImage(result.assets[0].uri);

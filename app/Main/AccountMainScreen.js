@@ -6,10 +6,10 @@ import { auth } from "../../firebase";
 import { signOut } from "firebase/auth";
 import { router } from "expo-router";
 
-import TopPart from "./TopPart";
-import TouchableItems from "./TouchableItems";
-import Icons from "./Icons";
-import LogoutButton from "./LogoutButton";
+import TopPart from "../../components/TopPart";
+import TouchableItems from "../../components/TouchableItems";
+import AccountPageItems from "../../components/AccountPageItems";
+import LogoutButton from "../../components/LogoutButton";
 import CustomeActivityIndicator from "../../components/CustomeActivityIndicator";
 
 const AccountMainScreen = (props) => {
@@ -43,7 +43,7 @@ const AccountMainScreen = (props) => {
           <TopPart name={user?.displayName} email={user?.email} />
           <View style={styles.line}></View>
           <View style={styles.IconsContainer}>
-            {Icons.map((item) => (
+            {AccountPageItems.map((item) => (
               <TouchableItems
                 key={item.text}
                 text={item.text}
