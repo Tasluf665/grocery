@@ -15,55 +15,34 @@ export default function TopPart(props) {
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         aspect: [4, 3],
         quality: 1,
-        allowsMultipleSelection: true,
-        selectionLimit: 5,
-        orderedSelection: true,
+        allowsEditing: true,
       });
 
       if (result?.assets[0]?.uri) {
-        setImage(result.assets);
+        setImage(result.assets[0].uri);
       }
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  const imageArray = () => {
-    return image.map((item) => {
-      return (
-        <TouchableWithoutFeedback key={item.uri} onPress={pickImage}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: item.uri,
-            }}
-          />
-        </TouchableWithoutFeedback>
-      );
-    });
-  };
-
   return (
     <View style={styles.container}>
-      {image ? (
-        <>{imageArray()}</>
-      ) : (
-        <TouchableWithoutFeedback onPress={pickImage}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: "https://cdn-icons-png.flaticon.com/512/9073/9073292.png",
-            }}
-          />
-        </TouchableWithoutFeedback>
-      )}
+      <TouchableWithoutFeedback onPress={pickImage}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: image
+              ? image
+              : "https://cdn-icons-png.flaticon.com/512/9073/9073292.png",
+          }}
+        />
+      </TouchableWithoutFeedback>
 
-      {image?.length > 1 ? null : (
-        <View>
-          <Text style={styles.text}>{props.name}</Text>
-          <Text style={styles.text}>{props.email}</Text>
-        </View>
-      )}
+      <View>
+        <Text style={styles.text}>{props.name}</Text>
+        <Text style={styles.text}>{props.email}</Text>
+      </View>
     </View>
   );
 }
